@@ -102,7 +102,7 @@ This key theme variable may be refactored in the future so use with caution."
       "If we made a selection during `corfu' completion, select it.")
     ;; FIXME: Not sure why we need to use `define-key' here instead of
     ;; `evil-collection-define-key';.
-    (when (evil-collection-can-bind-key "RET")
+    (when (evil-collection-bind-p "RET")
       (define-key corfu-map (kbd "RET")
         evil-collection-corfu-insert-or-next-line)))
 

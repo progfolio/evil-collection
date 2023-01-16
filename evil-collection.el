@@ -529,12 +529,12 @@ to filter keys on the basis of `evil-collection-key-whitelist' and
       (setq filtered-bindings (nreverse filtered-bindings))
       (evil-collection--define-key states-to-bind map-sym filtered-bindings))))
 
-(defun evil-collection-can-bind-key (key)
-  "Return whether or not we should bind KEY."
-  (let* ((whitelist (mapcar 'kbd evil-collection-key-whitelist))
-         (blacklist (mapcar 'kbd evil-collection-key-blacklist)))
-    (or (and whitelist (member key whitelist))
-        (not (member key blacklist)))))
+(define-obsolete-function-alias 'evil-collection-can-bind-key
+  'evil-collection-bind-p "2023-01-16")
+(defun evil-collection-bind-p (key)
+  "Return t if KEY allowed to be rebound, nil otherwise."
+  (or (member key (mapcar #'kbd evil-collection-key-whitelist))
+      (not (member key (mapcar #'kbd evil-collection-key-blacklist)))))
 
 (defun evil-collection--define-key (state map-sym bindings)
   "Workhorse function for `evil-collection-define-key'.
