@@ -47,7 +47,7 @@
 (require 'evil)
 (require 'annalist)
 
-(defvar evil-collection-base-dir (file-name-directory load-file-name)
+(defvar evil-collection-base-dir (file-name-directory (or load-file-name (file-truename (buffer-file-name))))
   "Store the directory evil-collection.el was loaded from.")
 
 (defvar evil-want-integration)
