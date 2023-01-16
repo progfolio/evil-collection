@@ -40,7 +40,7 @@
 ;; have notmuch-common-keymap as parent
 ;; https://git.notmuchmail.org/git?p=notmuch;a=blob;f=emacs/notmuch-hello.el;h=fa31694ff0f79a7f2781849394390a673f75aade;hb=HEAD#l651
 ;; 
-;; When `evil-collection-setup-hook` runs, if it changes keymaps
+;; When `evil-collection-setup-functions` runs, if it changes keymaps
 ;; using a `dolist` over `evil-collection-notmuch-maps`, then a binding might
 ;; see 2 changes at once. To avoid that, notmuch-common-keymap is last
 (defconst evil-collection-notmuch-maps '(notmuch-hello-mode-map

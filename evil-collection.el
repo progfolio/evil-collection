@@ -120,22 +120,22 @@ This will bind additional find-* type commands, e.g. usages, assignments, etc.."
     eshell)
   "List of modes whose keybinds aren't completely set up after the mode is
 loaded. This can be a problem for cases where we're doing key translations
-using `evil-collection-setup-hook' which would result in an empty keymap.
+using `evil-collection-setup-functions' which would result in an empty keymap.
 
-Normally we run `evil-collection-setup-hook' right away after the mode
+Normally we run `evil-collection-setup-functions' right away after the mode
 is loaded in `with-eval-after-load' (see `evil-collection-init') but for these
 modes, we skip running that hook and let the corresponding `evil-collection'
-package handle running `evil-collection-setup-hook'.
+package handle running `evil-collection-setup-functions'.
 
 Elements in this list either match a target mode symbol or the car of a list in
 `evil-collection--supported-modes'.
 
 If `evil-collection-always-run-setup-hook-after-load' is t, this list isn't
-read and `evil-collection-setup-hook' will be ran in the
+read and `evil-collection-setup-functions' will be ran in the
 `with-eval-after-load' block in `evil-collection-init'.")
 
 (defcustom evil-collection-always-run-setup-hook-after-load nil
-  "Whether to always run `evil-collection-setup-hook' after mode is loaded.
+  "Whether to always run `evil-collection-setup-functions' after mode is loaded.
 
 See `evil-collection-init' and `evil-collection--modes-with-delayed-setup'."
   :type 'boolean
@@ -423,8 +423,13 @@ This is a list of symbols that are suitable for input to
   :type '(repeat symbol)
   :group 'evil-collection)
 
-(defvar evil-collection-setup-hook nil
-  "Hook run by `evil-collection-init' for each mode that is evilified.
+(define-obsolete-variable-alias
+  'evil-collection-setup-hook
+  'evil-collection-setup-functions
+  "2023-01-16")
+
+(defvar evil-collection-setup-functions nil
+  "Abnormal hook run by `evil-collection-init' for evilified modes.
 This hook runs after all setup (including keybindings) for a mode has already
 taken place. The arguments passed to functions for this hook are the name of the
 mode and a list of keymap names (i.e. symbols, not actual keymaps) customized by
@@ -895,7 +900,7 @@ instead of the modes in `evil-collection-mode-list'."
                     (intern (format "evil-collection-%s-maps" m))))))
             (when (or evil-collection-always-run-setup-hook-after-load
                       (not (memq m evil-collection--modes-with-delayed-setup)))
-              (run-hook-with-args 'evil-collection-setup-hook
+              (run-hook-with-args 'evil-collection-setup-functions
                                   m mode-keymaps)))))))
   (when evil-collection-want-unimpaired-p
     (evil-collection-require 'unimpaired)
